@@ -24,6 +24,7 @@ var app = new Vue({
   el: '#app',
   data: {
     func: new Func(),
+    cart: [],
     search: '',
     functions: [
       new Func(
@@ -87,6 +88,24 @@ var app = new Vue({
     itemClicked: function(func) {
       this.func = func;
       $("#my-modal").modal('show');
+    },
+    showCart: function() {
+      $("#cart-modal").modal('show');
+    },
+    addToCart: function(func) {
+      // only add if not in there yet
+      if(this.cart.findIndex(el => el === func) == -1)
+        this.cart.push(func);
+    },
+    removeFromCart: function(func) {
+      const index = this.cart.findIndex(el => el === func)
+      if(index > -1)
+        this.cart.splice(index, 1);
+    },
+    isInCart: function(func) {
+      if(this.cart.findIndex(el => el === func) == -1)
+        return false;
+      return true;
     }
   },
 
