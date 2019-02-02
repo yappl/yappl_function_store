@@ -1,0 +1,78 @@
+html, body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+div#app {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+div#app .search-wrapper {
+  position: relative;
+}
+div#app .search-wrapper input {
+  padding: 4px 12px;
+  color: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  transition: .15s all ease-in-out;
+  background: white;
+}
+div#app .search-wrapper input:focus {
+  outline: none;
+}
+div#app .search-wrapper input::-webkit-input-placeholder {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.5);
+  font-weight: 100;
+}
+div#app .wrapper {
+  display: flex;
+  max-width: 1000px;
+  flex-wrap: wrap;
+  padding-top: 12px;
+}
+div#app .card {
+  box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+  width: 300px;
+  margin: 12px;
+  transition: .15s all ease-in-out;
+  text-decoration: none;
+  padding: 12px;
+  font-size: 24px;
+  color: #585858;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 5px;
+}
+div#app .card h2 {
+  color: #236B5D;
+}
+div#app .card:hover {
+  transform: scale(1.1);
+}
+div#app .card img {
+  padding: 12px;
+  height: 100px;
+  width: 100px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+div#app .modal-body img {
+  padding: 12px;
+  height: 100px;
+  width: 100px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+div#app .card a small {
+  font-size: 14px;
+  padding: 4px;
+}
