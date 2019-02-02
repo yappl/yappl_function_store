@@ -67,9 +67,22 @@
             </h5>
           </div>
           <div class="modal-body">
-            <div v-for="func in cart">
-              <p>- "{{ func.name }}" by {{ func.author }}</p>
-            </div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">name</th>
+                  <th scope="col">author</th>
+                  <th scope="col"><i class="far fa-edit"></i></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="func in cart">
+                  <td>{{ func.name }}</td>
+                  <td>{{ func.author }}</td>
+                  <td @click="removeFromCart(func)" data-toggle="tooltip" data-placement="top" title="Remove from cart"><i class="fas fa-trash"></i></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
