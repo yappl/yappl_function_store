@@ -3,6 +3,7 @@ function _classCallCheck(instance, Constructor) {
     throw new TypeError("Cannot call a class as a function");
   }
 }
+// TODO: link to browse source vs link to deploy function (/main.js etc)
 var Func = function Func(name, description, author, compatibility, image_url, link) {
   _classCallCheck(this, Func);
   this.name = name;
@@ -114,7 +115,7 @@ var app = new Vue({
       let text = "packages:\n  function_store:\n    actions:\n"
       this.cart.forEach(function(func) {
         text += "      " + func.name + ":\n"
-        text += "        function: " + func.name + "/main.js\n"
+        text += "        function: " + func.link + "\n"
       })
       let element = document.createElement('a');
       element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
