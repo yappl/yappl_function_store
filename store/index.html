@@ -32,14 +32,14 @@
             </h5>
           </div>
           <div class="modal-body">
-            <a v-bind:href="func.link" target="_blank">
+            <a v-bind:href="func.repo_link" target="_blank">
               <img v-bind:src=func.image_url />
             </a>
             <p>Name: {{ func.name }}</p>
             <p>Description: {{ func.description }}</p>
             <p>Author: {{ func.author }}</p>
             <p>Compatible Data Types: {{ func.compatibility }}</p>
-            <a v-bind:href="func.link" target="_blank">
+            <a v-bind:href="func.repo_link" target="_blank">
               <button type="button" class="btn btn-info">View Source</button>
             </a>
           </div>
@@ -105,6 +105,7 @@
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="js/func.js"></script>
   <script src="js/index.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>

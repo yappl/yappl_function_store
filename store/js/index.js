@@ -1,87 +1,66 @@
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-// TODO: link to browse source vs link to deploy function (/main.js etc)
-var Func = function Func(name, description, author, compatibility, image_url, link) {
-  _classCallCheck(this, Func);
-  this.name = name;
-  this.description = description;
-  this.author = author;
-  if(this.author == undefined || this.author == "")
-    this.author = 'unknown'
-
-  this.compatibility = compatibility
-
-  this.image_url = image_url
-  if(this.image_url == undefined || this.image_url == "")
-    this.image_url = 'https://www.ibm.com/cloud-computing/bluemix/sites/default/files/assets/page/IBM%20Cloud%20Functions%20Logo%20Primary_0_0.png'
-
-  this.link = link
-};
-
 var app = new Vue({
   el: '#app',
   data: {
-    func: new Func(),
+    func: new Func({}),
     cart: [],
     search: '',
     functions: [
-      new Func(
-        'anonymizer',
-        'Replaces data with *',
-        'tpei',
-        ['string'],
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Anonymous_emblem.svg/1200px-Anonymous_emblem.svg.png',
-        'https://github.com/TPei/thesis_code/tree/master/functions/transformation_orchestration/anonymizer'
-      ),
+      new Func({
+        name: 'anonymizer',
+        description: 'Replaces data with *',
+        author: 'tpei',
+        compatibility: ['string'],
+        image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Anonymous_emblem.svg/1200px-Anonymous_emblem.svg.png',
+        repo_link: 'https://github.com/TPei/thesis_code/tree/master/functions/transformation_orchestration/anonymizer',
+        code_link: 'https://github.com/TPei/thesis_code/tree/master/functions/transformation_orchestration/anonymizer'
+      }),
 
-      new Func(
-        'only_provider',
-        'return provider.tld from email',
-        'tpei',
-        ['string'],
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/%28at%29.svg/220px-%28at%29.svg.png'
-      ),
+      new Func({
+        name: 'only_provider',
+        description: 'return provider.tld from email',
+        author: 'tpei',
+        compatibility: ['string'],
+        image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/%28at%29.svg/220px-%28at%29.svg.png'
+      }),
 
-      new Func(
-        'none',
-        'returns passed data (echo)',
-        'tpei',
-        ['json'],
-      ),
+      new Func({
+        name: 'none',
+        description: 'returns passed data (echo)',
+        author: 'tpei',
+        compatibility: ['json'],
+      }),
 
-      new Func(
-        'hourly_average',
-        'Returns averages aggregated by hour',
-        'TU Berlin',
-        ['timeseries'],
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/BahnhofsuhrZuerich_RZ.jpg/220px-BahnhofsuhrZuerich_RZ.jpg'
-      ),
+      new Func({
+        name: 'hourly_average',
+        description: 'Returns averages aggregated by hour',
+        author: 'TU Berlin',
+        compatibility: ['timeseries'],
+        image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/BahnhofsuhrZuerich_RZ.jpg/220px-BahnhofsuhrZuerich_RZ.jpg'
+      }),
 
-      new Func(
-        'hourly_medians',
-        'Returns medians aggregated by hour',
-        'TU Berlin',
-        ['timeseries'],
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/BahnhofsuhrZuerich_RZ.jpg/220px-BahnhofsuhrZuerich_RZ.jpg'
-      ),
+      new Func({
+        name: 'hourly_medians',
+        description: 'Returns medians aggregated by hour',
+        author: 'TU Berlin',
+        compatibility: ['timeseries'],
+        image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/BahnhofsuhrZuerich_RZ.jpg/220px-BahnhofsuhrZuerich_RZ.jpg'
+      }),
 
-      new Func(
-        'hourly_min_max',
-        'Returns mins and maxs aggregated by hour',
-        '',
-        ['timeseries'],
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/BahnhofsuhrZuerich_RZ.jpg/220px-BahnhofsuhrZuerich_RZ.jpg'
-      ),
-      new Func(
-        'median',
-        'Returns median of an array',
-        '',
-        ['array(number)', 'array(boolean)', 'array(string)'],
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Comparison_mean_median_mode.svg/300px-Comparison_mean_median_mode.svg.png'
-      )
+      new Func({
+        name: 'hourly_min_max',
+        description: 'Returns mins and maxs aggregated by hour',
+        author: '',
+        compatibility: ['timeseries'],
+        image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/BahnhofsuhrZuerich_RZ.jpg/220px-BahnhofsuhrZuerich_RZ.jpg'
+      }),
+
+      new Func({
+        name: 'median',
+        description: 'Returns median of an array',
+        author: '',
+        compatibility: ['array(number)', 'array(boolean)', 'array(string)'],
+        image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Comparison_mean_median_mode.svg/300px-Comparison_mean_median_mode.svg.png'
+      })
     ]
   },
 
@@ -115,7 +94,7 @@ var app = new Vue({
       let text = "packages:\n  function_store:\n    actions:\n"
       this.cart.forEach(function(func) {
         text += "      " + func.name + ":\n"
-        text += "        function: " + func.link + "\n"
+        text += "        function: " + func.code_link + "\n"
       })
       let element = document.createElement('a');
       element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
