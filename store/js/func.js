@@ -15,8 +15,13 @@ var Func = function Func(func) {
   this.compatibility = func.compatibility
 
   this.image_url = func.image_url
-  if(this.image_url == undefined || this.image_url == "")
-    this.image_url = 'https://www.ibm.com/cloud-computing/bluemix/sites/default/files/assets/page/IBM%20Cloud%20Functions%20Logo%20Primary_0_0.png'
+  if(this.image_url == undefined || this.image_url == "") {
+    if (Math.random() > 0.5) {
+      this.image_url = './images/cloud_function.png'
+    } else {
+      this.image_url = './images/openwhisk.jpg'
+    }
+  }
 
   this.repo_link = func.repo_link
   this.code_link = func.code_link
