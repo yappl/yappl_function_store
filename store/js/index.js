@@ -113,16 +113,18 @@ var app = new Vue({
     },
     setStoreUrl: function() {
       const url = $("#store-url-input").val();
+      $("#store-url-input").val("");
       this.store_url = url;
       this.fetchFunctions();
+      $("#store-url-modal").modal('hide');
     },
     fetchFunctions: function() {
-      $.get(this.store_url, function(data) {
-        this.setFunctions(JSON.parse(data).functions);
+      //$.ajaxSetup({ cache: false });
+      $.getJSON(this.store_url, function(data) {
+        this.setFunctions(data.functions);
       }.bind(this));
     },
     setFunctions: function(functions) {
-      console.log("setting " + functions)
       this.functions = functions.map(f => new Func(f))
     },
   },
