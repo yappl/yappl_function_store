@@ -106,7 +106,27 @@ var app = new Vue({
       if(this.cart.findIndex(el => el === func) == -1)
         return false;
       return true;
-    }
+    },
+    cartNotEmpty: function() {
+      return this.cart.length > 0;
+    },
+    downloadCart: function() {
+      let text = "packages:\n  function_store:\n    actions:\n"
+      this.cart.forEach(function(func) {
+        text += "      " + func.name + ":\n"
+        text += "        function: " + func.name + "/main.js\n"
+      })
+      let element = document.createElement('a');
+      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+      element.setAttribute('download', 'manifest.yml');
+
+      element.style.display = 'none';
+      document.body.appendChild(element);
+
+      element.click();
+
+      document.body.removeChild(element);
+    },
   },
 
   computed: {

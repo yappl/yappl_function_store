@@ -85,6 +85,10 @@
             </table>
           </div>
           <div class="modal-footer">
+            <div v-if="cartNotEmpty()">
+              <button type="button" class="btn btn-primary"><i class="fas fa-cloud-upload-alt"></i> Deploy to OpenWhisk</button>
+              <button @click="downloadCart()" type="button" class="btn btn-primary"><i class="fas fa-download"></i> Download</button>
+            </div>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
         </div>
