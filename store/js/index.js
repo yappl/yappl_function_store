@@ -5,64 +5,7 @@ var app = new Vue({
     func: new Func({}),
     cart: [],
     search: '',
-    functions: [
-      //new Func({
-        //name: 'anonymizer',
-        //description: 'Replaces data with *',
-        //author: 'tpei',
-        //compatibility: ['string'],
-        //image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Anonymous_emblem.svg/1200px-Anonymous_emblem.svg.png',
-        //repo_link: 'https://github.com/TPei/thesis_code/tree/master/functions/transformation_orchestration/anonymizer',
-        //code_link: 'https://github.com/TPei/thesis_code/tree/master/functions/transformation_orchestration/anonymizer'
-      //}),
-
-      //new Func({
-        //name: 'only_provider',
-        //description: 'return provider.tld from email',
-        //author: 'tpei',
-        //compatibility: ['string'],
-        //image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/%28at%29.svg/220px-%28at%29.svg.png'
-      //}),
-
-      //new Func({
-        //name: 'none',
-        //description: 'returns passed data (echo)',
-        //author: 'tpei',
-        //compatibility: ['json'],
-      //}),
-
-      //new Func({
-        //name: 'hourly_average',
-        //description: 'Returns averages aggregated by hour',
-        //author: 'TU Berlin',
-        //compatibility: ['timeseries'],
-        //image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/BahnhofsuhrZuerich_RZ.jpg/220px-BahnhofsuhrZuerich_RZ.jpg'
-      //}),
-
-      //new Func({
-        //name: 'hourly_medians',
-        //description: 'Returns medians aggregated by hour',
-        //author: 'TU Berlin',
-        //compatibility: ['timeseries'],
-        //image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/BahnhofsuhrZuerich_RZ.jpg/220px-BahnhofsuhrZuerich_RZ.jpg'
-      //}),
-
-      //new Func({
-        //name: 'hourly_min_max',
-        //description: 'Returns mins and maxs aggregated by hour',
-        //author: '',
-        //compatibility: ['timeseries'],
-        //image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/BahnhofsuhrZuerich_RZ.jpg/220px-BahnhofsuhrZuerich_RZ.jpg'
-      //}),
-
-      //new Func({
-        //name: 'median',
-        //description: 'Returns median of an array',
-        //author: '',
-        //compatibility: ['array(number)', 'array(boolean)', 'array(string)'],
-        //image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Comparison_mean_median_mode.svg/300px-Comparison_mean_median_mode.svg.png'
-      //})
-    ]
+    functions: []
   },
 
   methods: {
