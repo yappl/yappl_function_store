@@ -1,6 +1,6 @@
 {
   "name": "anonymizer",
-  "url": "https://raw.githubusercontent.com/TPei/yappl_transformation_functions/master/functions/anonymizer/anonymizer.js",
+  "code": "function main(params) { console.log(\"hello\"); return params; }",
   "runtime": "nodejs:10",
   "package": "deployer"
 }

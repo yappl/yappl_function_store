@@ -5,7 +5,7 @@ function main(params) {
   const ow = openwhisk();
 
   let name = params.package + "/" + params.name
-  let code = 'function main(params) { return params; }'
+  let code = params.code
   let runtime = params.runtime
 
   return ow.actions.create({
