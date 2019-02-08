@@ -42,6 +42,7 @@
             <p>Description: {{ func.description }}</p>
             <p>Author: {{ func.author }}</p>
             <p>Compatible Data Types: {{ func.compatibility }}</p>
+            <p>runtime: {{ func.runtime }}</p>
             <a v-bind:href="func.repo_link" target="_blank">
               <button type="button" class="btn btn-info">View Source</button>
             </a>
@@ -125,6 +126,7 @@
         <h2>{{ func.name }}</h2>
         <small>{{ func.description }}</small>
         <small>Compatible with: {{ func.compatibility }}</small>
+        <small>runtime: {{ func.runtime }}</small>
         <small>by: {{ func.author }}</small>
       </div>
     </div>

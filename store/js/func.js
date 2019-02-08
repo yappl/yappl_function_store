@@ -13,6 +13,7 @@ var Func = function Func(func) {
     this.author = 'unknown'
 
   this.compatibility = func.compatibility
+  this.runtime = func.runtime
 
   this.image_url = func.image_url
   if(this.image_url == undefined || this.image_url == "") {
