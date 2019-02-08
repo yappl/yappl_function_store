@@ -3,3 +3,7 @@ packages:
     actions:
       get_functions:
         function: get_functions/main.js
+  deployer:
+    actions:
+      deployer:
+        function: deployer/main.js
