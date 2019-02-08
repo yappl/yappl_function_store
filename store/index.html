@@ -120,7 +120,9 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary"><i class="fas fa-cloud-upload-alt"></i> Deploy to OpenWhisk</button>
+            <div v-if="deployPrepareDone">
+              <button @click="deployFunctions()" type="button" class="btn btn-primary"><i class="fas fa-cloud-upload-alt"></i> Deploy to OpenWhisk</button>
+            </div>
             <button @click="closeDeployDialog()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
         </div>

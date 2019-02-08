@@ -9,6 +9,8 @@ var app = new Vue({
     functions: [],
     showSpinner: true,
     deployOutput: [],
+    preparedFunctionData: [],
+    deployPrepareDone: false,
   },
 
   methods: {
@@ -61,16 +63,12 @@ var app = new Vue({
     },
     prepareFunctions: function() {
       let self = this;
-      let prepareData = [];
-      let deployData = [];
-      let errors = false;
 
       this.deployOutput.push("Preparing Functions...");
       this.cart.forEach(function(func) {
         let name = func.name;
         let runtime = func.runtime;
         let url = func.code_link;
-        let package = "deployer";
 
         self.deployOutput.push("Preparing " + name + "...");
         // do ajax call to get code...
@@ -78,46 +76,65 @@ var app = new Vue({
           let code = data;
           console.log(code);
           self.deployOutput.push("Done preparing " + name + "...")
-          prepareData.push(name);
+          self.preparedFunctionData.push({ name: name, code: code, runtime: runtime });
 
-          if(prepareData.length == self.cart.length)
+          if(self.preparedFunctionData.length == self.cart.length) {
             self.deployOutput.push("Done preparing functions");
-
-          console.log(env.url)
-          self.deployerUrl = env.url
-          self.deployOutput.push("Deploying " + name + "...");
-
-          let deployRequestBody = JSON.stringify(
-            { name: name, package: package, code: code, runtime: runtime }
-          )
-          console.log("deploying with:");
-          console.log(deployRequestBody);
-
-          $.ajax({
-            type: "POST",
-            url: self.deployerUrl,
-            data: deployRequestBody,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json"
-          })
-            .done(function(data) {
-              console.log(data);
-              self.deployOutput.push("Deployed " + name + " successfully...");
-              // TODO: check if error and display accordingly
-            }).fail(function(data) {
-              self.deployOutput.push("Deploying " + name + " failed! :(");
-              errors = true;
-            }).always(function(data) {
-              deployData.push(name);
-              if(deployData.length == self.cart.length) {
-                self.deployOutput.push("Done deploying functions!");
-                if(errors == true)
-                  self.deployOutput.push("There were some errors :(");
-
-                self.showSpinner = false;
-              }
-            })
+            self.deployPrepareDone = true;
+            self.showSpinner = false;
+          }
         });
+      });
+    },
+    deployFunctions: function() {
+      this.showSpinner = true;
+
+      let self = this;
+      let deployData = [];
+      let errors = false;
+      let package = "deployer";
+
+      this.preparedFunctionData.forEach(function(func) {
+        let name = func.name;
+        let runtime = func.runtime;
+        let code = func.code;
+
+        console.log(env.url)
+        self.deployerUrl = env.url
+        self.deployOutput.push("Deploying " + name + "...");
+
+        let deployRequestBody = JSON.stringify(
+          { name: name, package: package, code: code, runtime: runtime }
+        )
+        console.log("deploying with:");
+        console.log(deployRequestBody);
+
+        $.ajax({
+          type: "POST",
+          url: self.deployerUrl,
+          data: deployRequestBody,
+          contentType: "application/json; charset=utf-8",
+          dataType: "json"
+        })
+          .done(function(data) {
+            console.log(data);
+            self.deployOutput.push("Deployed " + name + " successfully...");
+            // TODO: check if error and display accordingly
+          }).fail(function(data) {
+            self.deployOutput.push("Deploying " + name + " failed! :(");
+            errors = true;
+          }).always(function(data) {
+            deployData.push(name);
+            if(deployData.length == self.cart.length) {
+              self.deployOutput.push("Done deploying functions!");
+              if(errors == true)
+                self.deployOutput.push("There were some errors :(");
+
+              self.showSpinner = false;
+              self.preparedFunctionData = [];
+              self.deployPrepareDone = false;
+            }
+          })
       });
     },
     closeDeployDialog: function() {
