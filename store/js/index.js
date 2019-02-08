@@ -2,16 +2,19 @@ var app = new Vue({
   el: '#app',
   data: {
     store_url: "https://raw.githubusercontent.com/TPei/yappl_transformation_functions/master/store.json",
+    deployerUrl: "", // read from env file
     func: new Func({}),
     cart: [],
     search: '',
-    functions: []
+    functions: [],
+    showSpinner: true,
+    deployOutput: [],
   },
 
   methods: {
     itemClicked: function(func) {
       this.func = func;
-      $("#my-modal").modal('show');
+      $("#function-modal").modal('show');
     },
     showCart: function() {
       $("#cart-modal").modal('show');
@@ -51,6 +54,76 @@ var app = new Vue({
 
       document.body.removeChild(element);
     },
+    openDeployModal: function() {
+      $('#cart-modal').modal('hide');
+      $('#deploy-modal').modal('show');
+      this.prepareFunctions();
+    },
+    prepareFunctions: function() {
+      let self = this;
+      let prepareData = [];
+      let deployData = [];
+      let errors = false;
+
+      this.deployOutput.push("Preparing Functions...");
+      this.cart.forEach(function(func) {
+        let name = func.name;
+        let runtime = func.runtime;
+        let url = func.code_link;
+        let package = "deployer";
+
+        self.deployOutput.push("Preparing " + name + "...");
+        // do ajax call to get code...
+        $.get(url, function(data) {
+          let code = data;
+          console.log(code);
+          self.deployOutput.push("Done preparing " + name + "...")
+          prepareData.push(name);
+
+          if(prepareData.length == self.cart.length)
+            self.deployOutput.push("Done preparing functions");
+
+          console.log(env.url)
+          self.deployerUrl = env.url
+          self.deployOutput.push("Deploying " + name + "...");
+
+          let deployRequestBody = JSON.stringify(
+            { name: name, package: package, code: code, runtime: runtime }
+          )
+          console.log("deploying with:");
+          console.log(deployRequestBody);
+
+          $.ajax({
+            type: "POST",
+            url: self.deployerUrl,
+            data: deployRequestBody,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+          })
+            .done(function(data) {
+              console.log(data);
+              self.deployOutput.push("Deployed " + name + " successfully...");
+              // TODO: check if error and display accordingly
+            }).fail(function(data) {
+              self.deployOutput.push("Deploying " + name + " failed! :(");
+              errors = true;
+            }).always(function(data) {
+              deployData.push(name);
+              if(deployData.length == self.cart.length) {
+                self.deployOutput.push("Done deploying functions!");
+                if(errors == true)
+                  self.deployOutput.push("There were some errors :(");
+
+                self.showSpinner = false;
+              }
+            })
+        });
+      });
+    },
+    closeDeployDialog: function() {
+      this.deployOutput = [];
+      this.showSpinner = true;
+    },
     showStoreUrl: function() {
       $("#store-url-modal").modal('show');
     },
@@ -62,7 +135,7 @@ var app = new Vue({
       $("#store-url-modal").modal('hide');
     },
     fetchFunctions: function() {
-      //$.ajaxSetup({ cache: false });
+      $.ajaxSetup({ cache: false });
       $.getJSON(this.store_url, function(data) {
         this.setFunctions(data.functions);
       }.bind(this));
