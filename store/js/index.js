@@ -74,7 +74,6 @@ var app = new Vue({
         // do ajax call to get code...
         $.get(url, function(data) {
           let code = data;
-          console.log(code);
           self.deployOutput.push("Done preparing " + name + "...")
           self.preparedFunctionData.push({ name: name, code: code, runtime: runtime });
 
@@ -82,6 +81,7 @@ var app = new Vue({
             self.deployOutput.push("Done preparing functions");
             self.deployPrepareDone = true;
             self.showSpinner = false;
+            self.deployOutput.push("$divider");
           }
         });
       });
@@ -92,22 +92,19 @@ var app = new Vue({
       let self = this;
       let deployData = [];
       let errors = false;
-      let package = "deployer";
+      let package = $('#package-name').val();
 
       this.preparedFunctionData.forEach(function(func) {
         let name = func.name;
         let runtime = func.runtime;
         let code = func.code;
 
-        console.log(env.url)
         self.deployerUrl = env.url
         self.deployOutput.push("Deploying " + name + "...");
 
         let deployRequestBody = JSON.stringify(
           { name: name, package: package, code: code, runtime: runtime }
         )
-        console.log("deploying with:");
-        console.log(deployRequestBody);
 
         $.ajax({
           type: "POST",
@@ -117,8 +114,13 @@ var app = new Vue({
           dataType: "json"
         })
           .done(function(data) {
-            console.log(data);
-            self.deployOutput.push("Deployed " + name + " successfully...");
+            if(data.hasOwnProperty('error')) {
+              self.deployOutput.push("error deploying " + name + ": " + data.error.error);
+            } else if (data.hasOwnProperty('name')) {
+              self.deployOutput.push("deployed " + data.name + " successfully...");
+            } else {
+              self.deployOutput.push("issues deploying " + name + ". Might not have worked...");
+            }
             // TODO: check if error and display accordingly
           }).fail(function(data) {
             self.deployOutput.push("Deploying " + name + " failed! :(");
