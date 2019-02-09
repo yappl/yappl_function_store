@@ -115,11 +115,12 @@ var app = new Vue({
         })
           .done(function(data) {
             if(data.hasOwnProperty('error')) {
-              self.deployOutput.push("error deploying " + name + ": " + data.error.error);
+              self.deployOutput.push("Error deploying " + name + ": " + data.error.error);
+              errors = true;
             } else if (data.hasOwnProperty('name')) {
-              self.deployOutput.push("deployed " + data.name + " successfully...");
+              self.deployOutput.push("Deployed " + data.name + " successfully...");
             } else {
-              self.deployOutput.push("issues deploying " + name + ". Might not have worked...");
+              self.deployOutput.push("Issues deploying " + name + ". Might not have worked...");
             }
             // TODO: check if error and display accordingly
           }).fail(function(data) {
@@ -128,6 +129,7 @@ var app = new Vue({
           }).always(function(data) {
             deployData.push(name);
             if(deployData.length == self.cart.length) {
+              self.deployOutput.push("$divider");
               self.deployOutput.push("Done deploying functions!");
               if(errors == true)
                 self.deployOutput.push("There were some errors :(");
