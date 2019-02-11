@@ -35,7 +35,7 @@ class GetCommand
       packages:
         transformations:
           actions:
-    #{function_name}:
+            #{function_name}:
               function: ./#{filename}
     HEREDOC
     File.write("manifest.yml", manifest)
