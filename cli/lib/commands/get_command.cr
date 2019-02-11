@@ -32,11 +32,11 @@ class GetCommand
 
     File.write(filename, response)
     manifest = <<-HEREDOC
-      packages:
-        transformations:
-          actions:
-            #{function_name}:
-              function: ./#{filename}
+    packages:
+      _:
+        actions:
+          #{function_name}:
+            function: ./#{filename}
     HEREDOC
     File.write("manifest.yml", manifest)
 
