@@ -27,6 +27,12 @@ class Cache
     @active
   end
 
+  def clear
+    if File.exists?(CACHE_FILE)
+      File.delete(CACHE_FILE)
+    end
+  end
+
   # TODO: multiple entries, one per url
   def set(functions : Array(Function))
     str = <<-HEREDOC

@@ -14,6 +14,7 @@ class HelpCommand
       show     Show more in-depth info on a function
       get      Download a function and manifest file
       deploy   Deploy a function to your OpenWhisk installation
+      clear    Clears the store cache and fetches function data anew
 
     Flags:
       -h, --help   show help for current command
