@@ -33,7 +33,7 @@ class MainCommand
   end
 
   def run(args = [] of String)
-    return if args.size == 0
+    return HelpCommand.new.run if args.size == 0
     command = args[0]
     map[command].run(args[1..-1])
   end
