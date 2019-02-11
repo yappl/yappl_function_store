@@ -1,15 +1,11 @@
 class SearchCommand
   def run(args = [] of String)
-    url = URL
     if args.size > 0 && ["--help", "-h"].includes? args[0]
       puts help
       return
     end
-    if args.size > 1 && ["--url", "-u"].includes? args[0]
-      url = args[1]
-    end
 
-    puts "totally searching the store at #{url}"
+    puts "totally searching the store at #{URL}"
   end
 
   def help
@@ -31,7 +27,6 @@ class SearchCommand
       -n, --name            search function by name
       -a, --author          search function by author
       -c, --compatibility   search function by compatibiity
-      -u, --url             search non-default function store
     HEREDOC
   end
 end

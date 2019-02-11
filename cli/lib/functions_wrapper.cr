@@ -1,12 +1,12 @@
 class FunctionsWrapper
-  def self.functions(url)
+  def self.functions
     functions = [] of Function
 
-    cache = Cache.new(url)
+    cache = Cache.new URL
     if cache.active?
       functions = cache.functions
     else
-      response = HTTP::Client.get url
+      response = HTTP::Client.get URL
       obj = JSON.parse(response.body)
       response_body = obj["functions"].to_json
 
@@ -16,7 +16,7 @@ class FunctionsWrapper
     return functions
   end
 
-  def self.function_by(name, url)
-    self.functions(url).find { |f| f.name == name }
+  def self.function_by(name)
+    self.functions.find { |f| f.name == name }
   end
 end

@@ -1,20 +1,13 @@
 class DeployCommand
   def run(args = [] of String)
     arguments = ArgumentParser.parse(args_map, args)
-    url = URL
     function_name = args[0]
 
     return puts help if arguments.has_key?("-h") || arguments.has_key?("--help")
 
-    if arguments.has_key?("-u")
-      url = arguments["-u"][0]
-    elsif arguments.has_key?("--url")
-      url = arguments["--url"][0]
-    end
-
     deploy_name = determine_deploy_name(function_name, arguments)
 
-    puts "deploying #{function_name} from #{url} as #{deploy_name}"
+    puts "deploying #{function_name} as #{deploy_name}"
   end
 
   def determine_deploy_name(function_name, arguments)
@@ -66,7 +59,6 @@ class DeployCommand
       -i, --info      set function package and name
       -n, --name      set function name
       -p, --package   set function package
-      -u, --url    show from non-default function store
     HEREDOC
   end
 
@@ -80,8 +72,6 @@ class DeployCommand
       "--name" => 1,
       "-p" => 1,
       "--package" => 1,
-      "-u" => 1,
-      "--url" => 1
     }
   end
 end

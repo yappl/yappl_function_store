@@ -11,8 +11,6 @@ class ArgumentParser
     #   "--name" => 1,
     #   "-p" => 1,
     #   "--package" => 1,
-    #   "-u" => 1,
-    #  "--url" => 1
     # }
     # and returns map like
     # to show which flags where used with what arguments
@@ -20,7 +18,6 @@ class ArgumentParser
     #   "--help" => [] of String,
     #   "-i" => ["some_name"],
     #   "--name" => ["some_name"],
-    #   "--url" => ["some url"]
     # }
 
     result = {} of String => Array(String)
@@ -48,8 +45,6 @@ end
     #"--name" => 1,
     #"-p" => 1,
     #"--package" => 1,
-    #"-u" => 1,
-    #"--url" => 1
   #},
-  #["-h", "--url", "https://fake.com"]
+  #["-h", "--package", "package_name"]
 #)

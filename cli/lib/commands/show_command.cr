@@ -1,19 +1,11 @@
 class ShowCommand
   def run(args = [] of String)
-    url = URL
-
     arguments = ArgumentParser.parse(args_map, args)
     function_name = args[0]
 
     return puts help if arguments.has_key?("-h") || arguments.has_key?("--help")
 
-    if arguments.has_key?("-u")
-      url = arguments["-u"][0]
-    elsif arguments.has_key?("--url")
-      url = arguments["--url"][0]
-    end
-
-    function = FunctionsWrapper.function_by(function_name, url)
+    function = FunctionsWrapper.function_by(function_name)
 
     if function.nil?
       puts "no function by that name found"
@@ -28,7 +20,7 @@ class ShowCommand
     puts "Author:        #{function.author}"
     puts "Code:          #{function.repo_link}"
 
-    puts "showing functions from #{url}"
+    puts "showing functions from #{URL}"
   end
 
   def help
@@ -44,15 +36,12 @@ class ShowCommand
 
     Flags:
       -h, --help   help for show command
-      -u, --url    show from non-default function store
     HEREDOC
   end
   def args_map
     {
       "-h" => 0,
       "--help" => 0,
-      "-u" => 1,
-      "--url" => 1
     }
   end
 end

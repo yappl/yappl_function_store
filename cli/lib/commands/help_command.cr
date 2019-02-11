@@ -17,7 +17,6 @@ class HelpCommand
 
     Flags:
       -h, --help   show help for current command
-      -u, --url    Alternative Store URL (default "https://raw.githubusercontent.com/TPei/yappl_transformation_functions/master/store.json")
     HEREDOC
   end
 end

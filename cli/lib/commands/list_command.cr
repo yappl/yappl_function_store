@@ -1,15 +1,11 @@
 class ListCommand
   def run(args = [] of String)
-    url = URL
     if args.size > 0 && ["--help", "-h"].includes? args[0]
       puts help
       return
     end
-    if args.size > 1 && ["--url", "-u"].includes? args[0]
-      url = args[1]
-    end
 
-    functions = FunctionsWrapper.functions(url)
+    functions = FunctionsWrapper.functions
 
     length = functions.map do |f|
       f.name
@@ -37,10 +33,7 @@ class ListCommand
       yt list
 
     Examples:
-      yt list --url https://some_url.com/store.json
-
-    Flags:
-      -u, --url     search non-default function store
+      yt list
     HEREDOC
   end
 end
