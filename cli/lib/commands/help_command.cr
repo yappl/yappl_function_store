@@ -1,6 +1,6 @@
 class HelpCommand
   def run(*args)
-    return <<-HEREDOC
+    return puts <<-HEREDOC
 
     Enables discovery and deployment of yappl transformation functions on
     OpenWhisk
