@@ -1,3 +1,4 @@
 store/js/env.js
 cli/.env
 cli/.cache.json
+cli/lib/dotenv/
