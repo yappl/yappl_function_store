@@ -20,26 +20,26 @@ class DeployCommand
     response = HTTP::Client.get(function_url).body
 
     filename = function_url.split("/")[-1]
-    if File.exists?(filename)
-      puts "file by that name already exists"
-      return
-    else
-      File.write(filename, response)
+    unless arguments.has_key?("--overwrite")
+      if File.exists?(filename)
+        puts "file by that name already exists"
+        return
+      end
+      if File.exists?("manifest.yml")
+        puts "manifest file already exists"
+        return
+      end
     end
 
-    if File.exists?("manifest.yml")
-      puts "manifest file already exists"
-      return
-    else
-      manifest = <<-HEREDOC
-      packages:
-        #{package}:
-          actions:
-            #{name}:
-              function: ./#{filename}
-      HEREDOC
-      File.write("manifest.yml", manifest)
-    end
+    File.write(filename, response)
+    manifest = <<-HEREDOC
+    packages:
+      #{package}:
+        actions:
+          #{name}:
+            function: ./#{filename}
+    HEREDOC
+    File.write("manifest.yml", manifest)
 
     puts "deploying #{function_name} as #{package}/#{name}"
 
@@ -107,6 +107,7 @@ class DeployCommand
       "--name" => 1,
       "-p" => 1,
       "--package" => 1,
+      "--overwrite" => 0
     }
   end
 end

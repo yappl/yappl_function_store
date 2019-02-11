@@ -18,28 +18,29 @@ class GetCommand
     response = HTTP::Client.get(function_url).body
 
     filename = function_url.split("/")[-1]
-    if File.exists?(filename)
-      puts "function file by that name already exists"
-      return
-    else
-      File.write(filename, response)
+
+    unless arguments.has_key?("--overwrite")
+      if File.exists?("manifest.yml")
+        puts "manifest file already exists"
+        return
+      end
+      if File.exists?(filename)
+        puts "function file by that name already exists"
+        return
+      end
     end
 
-    if File.exists?("manifest.yml")
-      puts "manifest file already exists"
-      return
-    else
-      manifest = <<-HEREDOC
+    File.write(filename, response)
+    manifest = <<-HEREDOC
       packages:
         transformations:
           actions:
-            #{function_name}:
+    #{function_name}:
               function: ./#{filename}
-      HEREDOC
-      File.write("manifest.yml", manifest)
-    end
+    HEREDOC
+    File.write("manifest.yml", manifest)
 
-    puts "Downloaded #{filename} to local directory"
+    puts "Downloaded #{filename} and manifest.yml to local directory"
   end
 
   def help
@@ -59,6 +60,6 @@ class GetCommand
   end
 
   def args_map
-    { "--help" => 0, "-h" => 0 }
+    { "--help" => 0, "-h" => 0, "--overwrite" => 0 }
   end
 end
