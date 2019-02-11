@@ -8,9 +8,7 @@ class DeployCommand
 
     if arguments.has_key?("-u")
       url = arguments["-u"][0]
-    end
-
-    if arguments.has_key?("--url")
+    elsif arguments.has_key?("--url")
       url = arguments["--url"][0]
     end
 
