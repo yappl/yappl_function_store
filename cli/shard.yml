@@ -1,0 +1,6 @@
+name: yt
+version: 0.0.1
+
+dependencies:
+  dotenv:
+    github: gdotdesign/cr-dotenv
