@@ -15,4 +15,8 @@ class FunctionsWrapper
     cache.set(functions)
     return functions
   end
+
+  def self.function_by(name, url)
+    self.functions(url).find { |f| f.name == name }
+  end
 end

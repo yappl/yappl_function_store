@@ -13,9 +13,7 @@ class ShowCommand
       url = arguments["--url"][0]
     end
 
-    functions = FunctionsWrapper.functions(url)
-
-    function = functions.find { |f| f.name == function_name }
+    function = FunctionsWrapper.function_by(function_name, url)
 
     if function.nil?
       puts "no function by that name found"
