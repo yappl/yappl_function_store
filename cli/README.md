@@ -1,6 +1,20 @@
 # YaPPL Transformation Store CLI (yt)
 
-Usages:
+Use this to interact with the function store:
+
+Example:
+
+`$ ./yt list`
+```
+>
+FUNCTION           DESCRIPTION
+anonymizer         This function replaces all string's characters with *
+ruby_anonymizer    This function replaces all string's characters with*, same as anonymizer but slo...
+none               This function does not make any changes to the given data... Basically an echo
+only_provider      This function returns prover.tld from an email.
+```
+
+## Usages:
 - yt list -> shows available functions
 - yt search -> searches for functions
   - yt search [-n name | -a author | -c compatibilities]
