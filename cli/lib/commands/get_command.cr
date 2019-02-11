@@ -12,12 +12,14 @@ class GetCommand
       return
     end
 
+    puts "downloading function data"
+
     function_url = function.code_link
     response = HTTP::Client.get(function_url).body
 
     filename = function_url.split("/")[-1]
     if File.exists?(filename)
-      puts "file by that name already exists"
+      puts "function file by that name already exists"
       return
     else
       File.write(filename, response)

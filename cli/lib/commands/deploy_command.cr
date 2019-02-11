@@ -5,19 +5,58 @@ class DeployCommand
 
     return puts help if arguments.has_key?("-h") || arguments.has_key?("--help")
 
-    deploy_name = determine_deploy_name(function_name, arguments)
+    package, name = determine_deploy_name(function_name, arguments)
 
-    puts "deploying #{function_name} as #{deploy_name}"
+    function = FunctionsWrapper.function_by(function_name)
+
+    if function.nil?
+      puts "no function by that name found"
+      return
+    end
+
+    puts "downloading function data"
+
+    function_url = function.code_link
+    response = HTTP::Client.get(function_url).body
+
+    filename = function_url.split("/")[-1]
+    if File.exists?(filename)
+      puts "file by that name already exists"
+      return
+    else
+      File.write(filename, response)
+    end
+
+    if File.exists?("manifest.yml")
+      puts "manifest file already exists"
+      return
+    else
+      manifest = <<-HEREDOC
+      packages:
+        #{package}:
+          actions:
+            #{name}:
+              function: ./#{filename}
+      HEREDOC
+      File.write("manifest.yml", manifest)
+    end
+
+    puts "deploying #{function_name} as #{package}/#{name}"
+
+    # TODO: with deployer?
+    `wskdeploy`
+
+    puts "done"
   end
 
   def determine_deploy_name(function_name, arguments)
     f_name = function_name
-    package = ""
+    package = "_"
 
     if arguments.has_key?("-i")
-      return arguments["-i"][0]
+      return arguments["-i"][0].split("/")
     elsif arguments.has_key?("--info")
-      return arguments["--info"][0]
+      return arguments["--info"][0].split("/")
     end
 
     if arguments.has_key?("-p")
@@ -32,11 +71,7 @@ class DeployCommand
       f_name = arguments["--name"][0]
     end
 
-    if package != ""
-      return package + "/" + f_name
-    else
-      return f_name
-    end
+    return package, f_name
   end
 
   def help
