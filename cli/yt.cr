@@ -4,11 +4,13 @@ require "json"
 require "./lib/function.cr"
 require "./lib/functions_wrapper.cr"
 require "./lib/cache.cr"
+require "./lib/argument_parser.cr"
+require "./lib/commands/deploy_command.cr"
+require "./lib/commands/get_command.cr"
 require "./lib/commands/help_command.cr"
-require "./lib/commands/help_command.cr"
-require "./lib/commands/help_command.cr"
-require "./lib/commands/help_command.cr"
-require "./lib/commands/help_command.cr"
+require "./lib/commands/list_command.cr"
+require "./lib/commands/search_command.cr"
+require "./lib/commands/show_command.cr"
 
 Dotenv.load
 
