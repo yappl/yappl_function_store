@@ -1,15 +1,51 @@
 class DeployCommand
   def run(args = [] of String)
+    arguments = ArgumentParser.parse(args_map, args)
     url = URL
-    if args.size > 0 && ["--help", "-h"].includes? args[0]
-      puts help
-      return
-    end
-    if args.size > 1 && ["--url", "-u"].includes? args[0]
-      url = args[1]
+    function_name = args[0]
+
+    return puts help if arguments.has_key?("-h") || arguments.has_key?("--help")
+
+    if arguments.has_key?("-u")
+      url = arguments["-u"][0]
     end
 
-    puts "deploying a function from #{url}"
+    if arguments.has_key?("--url")
+      url = arguments["--url"][0]
+    end
+
+    deploy_name = determine_deploy_name(function_name, arguments)
+
+    puts "deploying #{function_name} from #{url} as #{deploy_name}"
+  end
+
+  def determine_deploy_name(function_name, arguments)
+    f_name = function_name
+    package = ""
+
+    if arguments.has_key?("-i")
+      return arguments["-i"][0]
+    elsif arguments.has_key?("--info")
+      return arguments["--info"][0]
+    end
+
+    if arguments.has_key?("-p")
+      package = arguments["-p"][0]
+    elsif arguments.has_key?("--package")
+      package = arguments["--package"][0]
+    end
+
+    if arguments.has_key?("-n")
+      f_name = arguments["-n"][0]
+    elsif arguments.has_key?("--name")
+      f_name = arguments["--name"][0]
+    end
+
+    if package != ""
+      return package + "/" + f_name
+    else
+      return f_name
+    end
   end
 
   def help
@@ -34,5 +70,20 @@ class DeployCommand
       -p, --package   set function package
       -u, --url    show from non-default function store
     HEREDOC
+  end
+
+  def args_map
+    {
+      "-h" => 0,
+      "--help" => 0,
+      "-i" => 1,
+      "--info" => 1,
+      "-n" => 1,
+      "--name" => 1,
+      "-p" => 1,
+      "--package" => 1,
+      "-u" => 1,
+      "--url" => 1
+    }
   end
 end
