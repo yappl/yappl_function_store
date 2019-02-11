@@ -17,6 +17,8 @@ class ListCommand
       name.size
     end.max
 
+    printf "%-*s" % [length + 4, "FUNCTION"]
+    puts "DESCRIPTION"
     functions.each do |function|
       printf "%-*s" % [length + 4, function.name]
       if function.description.size >= 80
