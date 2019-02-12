@@ -35,6 +35,7 @@ class MainCommand
   def run(args = [] of String)
     return HelpCommand.new.run if args.size == 0
     command = args[0]
+    return puts "not a valid command" unless map.has_key?(command)
     map[command].run(args[1..-1])
   end
 end
