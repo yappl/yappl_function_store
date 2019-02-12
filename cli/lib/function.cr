@@ -3,7 +3,7 @@ class Function
     name: String,
     description: String,
     compatibility: Array(String),
-    author: String?,
+    author: String,
     runtime: String,
     image_url: String?,
     repo_link: String,

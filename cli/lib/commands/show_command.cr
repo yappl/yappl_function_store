@@ -38,6 +38,7 @@ class ShowCommand
       -h, --help   help for show command
     HEREDOC
   end
+
   def args_map
     {
       "-h" => 0,
