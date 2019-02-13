@@ -16,7 +16,7 @@ class ClearCacheCommand
       yt clear
 
     Flags:
-      -h, --help      help for deploy command
+      -h, --help      help for clear command
     HEREDOC
   end
 

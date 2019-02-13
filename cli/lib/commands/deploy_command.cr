@@ -94,6 +94,7 @@ class DeployCommand
       -i, --info      set function package and name
       -n, --name      set function name
       -p, --package   set function package
+      --overwrite     overwrites locally saved data
     HEREDOC
   end
 

@@ -55,7 +55,8 @@ class GetCommand
       yt get median
 
     Flags:
-      -h, --help   help for show command
+      -h, --help   help for get command
+      --overwrite  overwrites locally saved data
     HEREDOC
   end
 

@@ -34,6 +34,9 @@ class ListCommand
 
     Examples:
       yt list
+
+    Flags:
+      -h, --help   help for list command
     HEREDOC
   end
 end
