@@ -1,8 +1,4 @@
 packages:
-  thesis_app_store_demo:
-    actions:
-      get_functions:
-        function: get_functions/main.js
   deployer:
     actions:
       deployer:
