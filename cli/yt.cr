@@ -12,12 +12,14 @@ require "./lib/commands/help_command.cr"
 require "./lib/commands/list_command.cr"
 require "./lib/commands/search_command.cr"
 require "./lib/commands/show_command.cr"
+require "./lib/commands/url_command.cr"
 
 Dotenv.verbose = false
 Dotenv.load
 
-URL = ENV["URL"]? || "https://raw.githubusercontent.com/TPei/yappl_transformation_functions/master/store.json"
+DEFAULT_URL = "https://raw.githubusercontent.com/TPei/yappl_transformation_functions/master/store.json"
 
+URL = ENV["URL"]? || DEFAULT_URL
 class MainCommand
   def map
     {
@@ -29,7 +31,8 @@ class MainCommand
       "show" => ShowCommand.new,
       "get" => GetCommand.new,
       "deploy" => DeployCommand.new,
-      "clear" => ClearCacheCommand.new
+      "clear" => ClearCacheCommand.new,
+      "url" => UrlCommand.new
     }
   end
 
