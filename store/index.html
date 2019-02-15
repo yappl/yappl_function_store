@@ -162,6 +162,7 @@
     </div>
     <div class="wrapper">
       <div class="card" @click="itemClicked(func)" v-for="func in filteredList">
+        <span class="dot" :class="cssClassForRuntime(func.runtime)"></span>
         <img v-bind:src=func.image_url />
         <h2>{{ func.name }}</h2>
         <small>{{ func.description }}</small>

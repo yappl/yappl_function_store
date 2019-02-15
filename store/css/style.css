@@ -50,6 +50,22 @@ div#app .card {
   align-items: center;
   border-radius: 5px;
 }
+.dot {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: flex;
+  align-self: flex-start;
+}
+.nodejs {
+  background-color: #0f0;
+}
+.ruby {
+  background-color: #f00;
+}
+.default-runtime {
+  background-color: #bbb;
+}
 div#app .card h2 {
   color: #236B5D;
 }

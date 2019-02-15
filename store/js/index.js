@@ -164,6 +164,20 @@ var app = new Vue({
     setFunctions: function(functions) {
       this.functions = functions.map(f => new Func(f))
     },
+    cssClassForRuntime: function(runtime) {
+      if (runtime.startsWith("nodejs")) {
+        return "nodejs";
+      } else if (runtime.startsWith("ruby")) {
+        return "ruby";
+      } else if (runtime.sWith("php")) {
+        return "php";
+      } else if (runtime.startsWith("java")) {
+        return "java";
+      } else if (runtime.startsWith("swift")) {
+        return "swift";
+      }
+      return "default-runtime";
+    }
   },
 
   mounted: function() {
