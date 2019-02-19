@@ -169,7 +169,7 @@ var app = new Vue({
         return "nodejs";
       } else if (runtime.startsWith("ruby")) {
         return "ruby";
-      } else if (runtime.sWith("php")) {
+      } else if (runtime.startsWith("php")) {
         return "php";
       } else if (runtime.startsWith("java")) {
         return "java";
