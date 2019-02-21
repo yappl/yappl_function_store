@@ -1,6 +1,7 @@
 class Func {
   constructor(func) {
     this.name = func.name;
+    this.short_description = func.short_description;
     this.description = func.description;
     this.author = func.author;
     if(this.author == undefined || this.author == "")
