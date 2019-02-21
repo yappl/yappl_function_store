@@ -217,6 +217,8 @@ var app = new Vue({
         return "java";
       } else if (runtime.startsWith("swift")) {
         return "swift";
+      } else if (runtime.startsWith("python")) {
+        return "python";
       }
       return "default-runtime";
     }
