@@ -119,6 +119,12 @@
               <div v-if="line == '$divider'">
                 <hr />
               </div>
+              <div v-else-if="line.startsWith('$error')">
+                <span class="text-danger">{{ line.replace("$error", "") }}</span>
+              </div>
+              <div v-else-if="line.startsWith('$warning')">
+                <span class="text-warning">{{ line.replace("$warning", "") }}</span>
+              </div>
               <div v-else>
                 {{ line }}
               </div>
@@ -131,7 +137,7 @@
           </div>
           <div class="modal-footer">
             <div v-if="deployPrepareDone">
-              <button @click="deployFunctions()" type="button" class="btn btn-primary"><i class="fas fa-cloud-upload-alt"></i> Deploy to OpenWhisk</button>
+              <button @click="createPackageAndDeployFunctions()" type="button" class="btn btn-primary"><i class="fas fa-cloud-upload-alt"></i> Deploy to OpenWhisk</button>
             </div>
             <button @click="closeDeployDialog()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>

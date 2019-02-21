@@ -3,3 +3,5 @@ packages:
     actions:
       deployer:
         function: deployer/main.js
+      package_creator:
+        function: package_creator/main.js

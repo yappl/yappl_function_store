@@ -3,6 +3,7 @@ var app = new Vue({
   data: {
     store_url: "https://raw.githubusercontent.com/TPei/yappl_transformation_functions/master/store.json",
     deployerUrl: "", // read from env file
+    packageCreatorUrl: "", // read from env file
     func: new Func({}),
     cart: [],
     search: '',
@@ -86,20 +87,57 @@ var app = new Vue({
         });
       });
     },
-    deployFunctions: function() {
+    createPackageAndDeployFunctions: function() {
       this.showSpinner = true;
-
       let self = this;
-      let deployData = [];
       let errors = false;
       let package = $('#package-name').val();
+      self.packageCreatorUrl = env.packageCreator.url;
+
+      self.deployOutput.push("Creating package: " + package);
+
+      $.ajax({
+        type: "POST",
+        url: self.packageCreatorUrl,
+        data: JSON.stringify({ package: { name: package }}),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json"
+      }).done(function(data) {
+        if(data.hasOwnProperty('error')) {
+          // yes, the actual return is { error: { error: { error: the_error_message } } }
+          if( data.error.error === "resource already exists") {
+            self.deployOutput.push("$warningPackage \"" + package + "\" already exists.");
+          } else {
+            self.deployOutput.push("$errorError creating " + package + ": " + data.error.error);
+            errors = true;
+          }
+        } else if (data.hasOwnProperty('name')) {
+          self.deployOutput.push("Created " + data.name + " successfully...");
+        } else {
+          self.deployOutput.push("$warningIssues creating " + package + ". Might not have worked...");
+        }
+      }).fail(function(data) {
+        self.deployOutput.push("$errorError creating " + package + " :(");
+        errors = true;
+      }).always(function(data) {
+        self.deployOutput.push("$divider");
+        this.showSpinner = false;
+        self.deployFunctions(errors);
+      });
+    },
+    deployFunctions: function(previousErrors) {
+      this.showSpinner = true;
+      let self = this;
+      let deployData = [];
+      let errors = previousErrors;
+      let package = $('#package-name').val();
+      self.deployerUrl = env.deployer.url;
 
       this.preparedFunctionData.forEach(function(func) {
         let name = func.name;
         let runtime = func.runtime;
         let code = func.code;
 
-        self.deployerUrl = env.url
         self.deployOutput.push("Deploying " + name + "...");
 
         let deployRequestBody = JSON.stringify(
@@ -115,16 +153,20 @@ var app = new Vue({
         })
           .done(function(data) {
             if(data.hasOwnProperty('error')) {
-              self.deployOutput.push("Error deploying " + name + ": " + data.error.error);
-              errors = true;
+              if( data.error.error === "resource already exists") {
+                self.deployOutput.push("$warningFunction \"" + name + "\" already exists.");
+              } else {
+                self.deployOutput.push("$errorError deploying " + name + ": " + data.error.error);
+                errors = true;
+              }
             } else if (data.hasOwnProperty('name')) {
               self.deployOutput.push("Deployed " + data.name + " successfully...");
             } else {
-              self.deployOutput.push("Issues deploying " + name + ". Might not have worked...");
+              self.deployOutput.push("$warningIssues deploying " + name + ". Might not have worked...");
             }
             // TODO: check if error and display accordingly
           }).fail(function(data) {
-            self.deployOutput.push("Deploying " + name + " failed! :(");
+            self.deployOutput.push("$errorDeploying " + name + " failed! :(");
             errors = true;
           }).always(function(data) {
             deployData.push(name);
@@ -132,7 +174,7 @@ var app = new Vue({
               self.deployOutput.push("$divider");
               self.deployOutput.push("Done deploying functions!");
               if(errors == true)
-                self.deployOutput.push("There were some errors :(");
+                self.deployOutput.push("$errorThere were some errors :(");
 
               self.showSpinner = false;
               self.preparedFunctionData = [];
