@@ -9,19 +9,21 @@
 
 <body>
   <div id="app">
-    <div class="search-wrapper">
-      <div class="input-group mb-2">
-        <div class="input-group-prepend">
-          <div class="input-group-text">
-            <i class="fas fa-search"></i>
+    <div class="sticky">
+      <div class="search-wrapper">
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <i class="fas fa-search"></i>
+            </div>
           </div>
+          <input class="form-control form-control-lg" type="text" v-model="search" placeholder="Search for function by name, author or data type"/>
         </div>
-        <input class="form-control form-control-lg" type="text" v-model="search" placeholder="Search for function by name, author or data type"/>
       </div>
-    </div>
-    <div class="topButtons">
-      <button @click="showStoreUrl()" class="btn btn-info"><i class="fas fa-store"></i> Set Store URL</button>
-      <button @click="showCart()" class="btn btn-info"><i class="fas fa-shopping-cart"></i> Show Cart</button>
+      <div class="topButtons">
+        <button @click="showStoreUrl()" class="btn btn-info"><i class="fas fa-store"></i> Set Store URL</button>
+        <button @click="showCart()" class="btn btn-info"><i class="fas fa-shopping-cart"></i> Show Cart</button>
+      </div>
     </div>
     <div id="function-modal" class="modal fade">
       <div class="modal-dialog" role="document">
@@ -170,11 +172,9 @@
       <div class="card" @click="itemClicked(func)" v-for="func in filteredList">
         <span class="dot" :class="cssClassForRuntime(func.runtime)"></span>
         <img v-bind:src=func.image_url />
-        <h2>{{ func.name }}</h2>
-        <small>{{ func.description }}</small>
-        <small>Compatible with: {{ func.compatibility }}</small>
-        <small>runtime: {{ func.runtime }}</small>
-        <small>by: {{ func.author }}</small>
+        <p>{{ func.name }}</p>
+        <p class="supersmall"> {{ func.short_description}} </p>
+        <p class="smallish">by: {{ func.author }}</p>
       </div>
     </div>
   </div>
