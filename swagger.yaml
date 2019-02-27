@@ -1,0 +1,72 @@
+swagger: '2.0'
+info:
+  description: >-
+    This is the API specification for the yappl transformation function store
+  version: 1.0.0
+  title: YaPPL Transformation Function Store
+host: raw.githubusercontent.com/TPei/yappl_transformation_functions
+basePath: /master
+tags:
+  - name: store
+    description: Functions for YaPPL
+    externalDocs:
+      description: Find out more
+      url: 'https://github.com/TPei/yappl_transformation_functions/'
+schemes:
+  - https
+paths:
+  /store.json:
+    get:
+      tags:
+        - store
+      summary: Returns all Functions
+      description: Returns all Functions
+      operationId: getFunctions
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Function'
+definitions:
+  Function:
+    type: object
+    properties:
+      name:
+        type: string
+        description: unique name of the function
+      short_description:
+        type: string
+        description: short description of the function
+      description:
+        type: string
+        description: description of the function
+      compatibility:
+        type: array
+        items:
+          type: string
+        description: compatible data types
+        example:
+          - number
+          - array(number)
+          - oject(string => array(number))
+      author:
+        type: string
+        description: name of the author
+      runtime:
+        type: string
+        description: a runtime string consisting of a runtime name and version
+        example: nodejs:10
+      image_url:
+        type: string
+        description: link to an image for the function
+      repo_link:
+        type: string
+        description: link to the repo (path) for the function
+        example: https://github.com/TPei/yappl_transformation_functions/tree/master/functions/anonymizer
+      code_link:
+        type: string
+        description: link to the function code
+        example: https://raw.githubusercontent.com/TPei/yappl_transformation_functions/master/functions/anonymizer/anonymizer.js
