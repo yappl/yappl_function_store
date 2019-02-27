@@ -65,24 +65,24 @@ var app = new Vue({
     prepareFunctions: function() {
       let self = this;
 
-      this.deployOutput.push("Preparing Functions...");
+      this.deployOutput.push({ type: "info", message: "Preparing Functions..." });
       this.cart.forEach(function(func) {
         let name = func.name;
         let runtime = func.runtime;
         let url = func.code_link;
 
-        self.deployOutput.push("Preparing " + name + "...");
+        self.deployOutput.push({ type: "info", message: "Preparing " + name + "..." });
         // do ajax call to get code...
         $.get(url, function(data) {
           let code = data;
-          self.deployOutput.push("Done preparing " + name + "...")
+          self.deployOutput.push({ type: "info", message: "Done preparing " + name + "..." })
           self.preparedFunctionData.push({ name: name, code: code, runtime: runtime });
 
           if(self.preparedFunctionData.length == self.cart.length) {
-            self.deployOutput.push("Done preparing functions");
+            self.deployOutput.push({ type: "info", message: "Done preparing functions" });
             self.deployPrepareDone = true;
             self.showSpinner = false;
-            self.deployOutput.push("$divider");
+            self.deployOutput.push({ type: "divider", message: "" });
           }
         });
       });
@@ -94,7 +94,7 @@ var app = new Vue({
       let package = $('#package-name').val();
       self.packageCreatorUrl = env.packageCreator.url;
 
-      self.deployOutput.push("Creating package: " + package);
+      self.deployOutput.push({ type: "info", message: "Creating package: " + package });
 
       $.ajax({
         type: "POST",
@@ -106,21 +106,21 @@ var app = new Vue({
         if(data.hasOwnProperty('error')) {
           // yes, the actual return is { error: { error: { error: the_error_message } } }
           if( data.error.error === "resource already exists") {
-            self.deployOutput.push("$warningPackage \"" + package + "\" already exists.");
+            self.deployOutput.push({ type: "warning", message: "Package \"" + package + "\" already exists." });
           } else {
-            self.deployOutput.push("$errorError creating " + package + ": " + data.error.error);
+            self.deployOutput.push({ type: "error", message: "Error creating " + package + ": " + data.error.error });
             errors = true;
           }
         } else if (data.hasOwnProperty('name')) {
-          self.deployOutput.push("Created " + data.name + " successfully...");
+          self.deployOutput.push({ type: "info", message: "Created " + data.name + " successfully..." });
         } else {
-          self.deployOutput.push("$warningIssues creating " + package + ". Might not have worked...");
+          self.deployOutput.push({ type: "warning", message: "Issues creating " + package + ". Might not have worked..." });
         }
       }).fail(function(data) {
-        self.deployOutput.push("$errorError creating " + package + " :(");
+        self.deployOutput.push({ type: "error", message: "Error creating " + package + " :(" });
         errors = true;
       }).always(function(data) {
-        self.deployOutput.push("$divider");
+        self.deployOutput.push({ type: "divider", message: "" });
         this.showSpinner = false;
         self.deployFunctions(errors);
       });
@@ -138,7 +138,7 @@ var app = new Vue({
         let runtime = func.runtime;
         let code = func.code;
 
-        self.deployOutput.push("Deploying " + name + "...");
+        self.deployOutput.push({ type: "info", message: "Deploying " + name + "..." });
 
         let deployRequestBody = JSON.stringify(
           { name: name, package: package, code: code, runtime: runtime }
@@ -154,27 +154,27 @@ var app = new Vue({
           .done(function(data) {
             if(data.hasOwnProperty('error')) {
               if( data.error.error === "resource already exists") {
-                self.deployOutput.push("$warningFunction \"" + name + "\" already exists.");
+                self.deployOutput.push({ type: "warning", message: "Function \"" + name + "\" already exists." });
               } else {
-                self.deployOutput.push("$errorError deploying " + name + ": " + data.error.error);
+                self.deployOutput.push({ type: "error", message: "Error deploying " + name + ": " + data.error.error });
                 errors = true;
               }
             } else if (data.hasOwnProperty('name')) {
-              self.deployOutput.push("Deployed " + data.name + " successfully...");
+              self.deployOutput.push({ type: "info", message: "Deployed " + data.name + " successfully..." });
             } else {
-              self.deployOutput.push("$warningIssues deploying " + name + ". Might not have worked...");
+              self.deployOutput.push({ type: "warning", message: "Issues deploying " + name + ". Might not have worked..." });
             }
             // TODO: check if error and display accordingly
           }).fail(function(data) {
-            self.deployOutput.push("$errorDeploying " + name + " failed! :(");
+            self.deployOutput.push({ type: "error", message: "Deploying " + name + " failed! :(" });
             errors = true;
           }).always(function(data) {
             deployData.push(name);
             if(deployData.length == self.cart.length) {
-              self.deployOutput.push("$divider");
-              self.deployOutput.push("Done deploying functions!");
+              self.deployOutput.push({ type: "divider", message: "" });
+              self.deployOutput.push({ type: "info", message: "Done deploying functions!" });
               if(errors == true)
-                self.deployOutput.push("$errorThere were some errors :(");
+                self.deployOutput.push({ type: "error", message: "There were some errors :(" });
 
               self.showSpinner = false;
               self.preparedFunctionData = [];

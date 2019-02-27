@@ -118,17 +118,17 @@
             </div>
             <hr />
             <div v-for="line in deployOutput">
-              <div v-if="line == '$divider'">
+              <div v-if="line.type == 'divider'">
                 <hr />
               </div>
-              <div v-else-if="line.startsWith('$error')">
-                <span class="text-danger">{{ line.replace("$error", "") }}</span>
+              <div v-else-if="line.type == 'error'">
+                <span class="text-danger">{{ line.message }}</span>
               </div>
-              <div v-else-if="line.startsWith('$warning')">
-                <span class="text-warning">{{ line.replace("$warning", "") }}</span>
+              <div v-else-if="line.type == 'warning'">
+                <span class="text-warning">{{ line.message }}</span>
               </div>
               <div v-else>
-                {{ line }}
+                {{ line.message }}
               </div>
             </div>
             <div v-if="showSpinner">
