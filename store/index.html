@@ -22,7 +22,7 @@
       </div>
       <div class="topButtons">
         <button @click="showStoreUrl()" class="btn btn-info"><i class="fas fa-store"></i> Set Store URL</button>
-        <button @click="showCart()" class="btn btn-info"><i class="fas fa-shopping-cart"></i> Show Cart</button>
+        <button @click="showCart()" class="btn btn-info"><i class="fas fa-shopping-cart"></i> Show Cart <span class="badge badge-light">{{ cart.length }}</span></button>
       </div>
     </div>
     <div id="function-modal" class="modal fade">
