@@ -1,7 +1,7 @@
 var app = new Vue({
   el: '#app',
   data: {
-    store_url: "https://raw.githubusercontent.com/TPei/yappl_transformation_functions/master/store.json",
+    store_url: "https://raw.githubusercontent.com/yappl/yappl_transformation_functions/master/store.json",
     deployerUrl: "", // read from env file
     packageCreatorUrl: "", // read from env file
     func: new Func({}),

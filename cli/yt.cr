@@ -17,7 +17,7 @@ require "./lib/commands/url_command.cr"
 Dotenv.verbose = false
 Dotenv.load
 
-DEFAULT_URL = "https://raw.githubusercontent.com/TPei/yappl_transformation_functions/master/store.json"
+DEFAULT_URL = "https://raw.githubusercontent.com/yappl/yappl_transformation_functions/master/store.json"
 
 URL = ENV["URL"]? || DEFAULT_URL
 class MainCommand
