@@ -14,7 +14,7 @@ class DeployCommand
       return
     end
 
-    puts "downloading function data"
+    puts "[1/2] downloading function data"
 
     function_url = function.code_link
     response = HTTP::Client.get(function_url).body
@@ -22,11 +22,15 @@ class DeployCommand
     filename = function_url.split("/")[-1]
     unless arguments.has_key?("--overwrite")
       if File.exists?(filename)
-        puts "file by that name already exists"
+        puts "ERROR: file by that name already exists"
+        puts "please use --overwrite to overwrite existing files"
+        puts "deploy aborted"
         return
       end
       if File.exists?("manifest.yml")
-        puts "manifest file already exists"
+        puts "ERROR: manifest file already exists"
+        puts "please use --overwrite to overwrite existing files"
+        puts "deploy aborted"
         return
       end
     end
@@ -41,7 +45,7 @@ class DeployCommand
     HEREDOC
     File.write("manifest.yml", manifest)
 
-    puts "deploying #{function_name} as #{package}/#{name}"
+    puts "[2/2] deploying #{function_name} as #{package}/#{name}"
 
     # TODO: with deployer?
     `wskdeploy`
